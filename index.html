@@ -24,6 +24,35 @@
       <p>Ryan, beter bekend als <strong>henRYANand</strong>, is een Twitch-streamer en YouTuber die bekend staat om zijn energie, humor en creatieve streams. Hij maakt content die mensen laat lachen en denken!</p>
     </section>
   </main>
+  <section>
+  <h2>Vraag iets aan de Fanbot!</h2>
+  <div id="chatbox">
+    <div id="chatlog"></div>
+    <input type="text" id="userInput" placeholder="Typ een vraag..." />
+    <button onclick="sendMessage()">Verstuur</button>
+  </div>
+</section>
+<script>
+  function sendMessage() {
+    const input = document.getElementById("userInput");
+    const chatlog = document.getElementById("chatlog");
+    const message = input.value.toLowerCase();
+    let response = "Ik weet het niet zeker 😅";
+
+    if (message.includes("wie is ryan")) {
+      response = "Ryan is een Twitch-streamer en YouTuber uit Nederland!";
+    } else if (message.includes("favoriete eten")) {
+      response = "Ryan lijkt gek op verrassingseten in mystery box video’s!";
+    } else if (message.includes("waarom is hij zo leuk")) {
+      response = "Omdat hij altijd positief en creatief is 😄";
+    }
+
+    chatlog.innerHTML += `<p><strong>Jij:</strong> ${input.value}</p>`;
+    chatlog.innerHTML += `<p><strong>Fanbot:</strong> ${response}</p>`;
+    input.value = "";
+  }
+</script>
+
 
   <footer>
     <p>© 2025 Fanpagina door SemdeRijder</p>
