@@ -54,3 +54,64 @@ button {
   padding: 5px 10px;
   margin-left: 5px;
 }
+#quiz {
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 30px;
+  max-width: 500px;
+}
+
+#quiz p {
+  font-weight: bold;
+}
+
+#quiz label {
+  margin-left: 10px;
+  display: block;
+  cursor: pointer;
+}
+
+#quiz input[type="text"] {
+  padding: 8px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+#quiz button {
+  padding: 10px 20px;
+  border: none;
+  background: linear-gradient(90deg, #007BFF, #00C851);
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+#quiz button:hover {
+  background: linear-gradient(90deg, #0056b3, #007e33);
+}
+
+#quizResult {
+  margin-top: 15px;
+  font-size: 1.1em;
+  font-weight: bold;
+  color: #00C851;
+}
+
+#scoreboard {
+  margin-top: 15px;
+  list-style: none;
+  padding-left: 0;
+}
+
+#scoreboard li {
+  background: rgba(0, 200, 81, 0.1);
+  padding: 8px 12px;
+  margin-bottom: 6px;
+  border-radius: 5px;
+}
