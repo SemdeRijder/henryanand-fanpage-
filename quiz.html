@@ -1,0 +1,125 @@
+<section id="quiz">
+  <h2>Quiz: Hoe goed ken jij henRYANand?</h2>
+  <form id="henryanQuiz">
+    <label for="playerName">Je naam:</label><br>
+    <input type="text" id="playerName" required placeholder="Vul je naam in"><br><br>
+
+    <div id="questionsContainer"></div>
+
+    <button type="button" onclick="checkQuiz()">Check antwoorden</button>
+  </form>
+
+  <div id="quizResult" style="margin-top: 10px;"></div>
+
+  <h3>Scoreboard</h3>
+  <ul id="scoreboard"></ul>
+</section>
+
+<script>
+  // Alle vragen, elk met vraag, opties en correct antwoord
+  const allQuestions = [
+    {
+      question: "Wat is het belangrijkste platform van henRYANand?",
+      options: ["Twitch", "YouTube", "Kick"],
+      answer: "Twitch"
+    },
+    {
+      question: "Welke content maakt hij vooral?",
+      options: ["Gaming", "Challenges", "Make-up"],
+      answer: "Challenges"
+    },
+    {
+      question: "Wat is een bekend kenmerk van Ryan?",
+      options: ["Hij praat weinig", "Hij is chaotisch en creatief", "Hij doet alleen sport"],
+      answer: "Hij is chaotisch en creatief"
+    },
+    {
+      question: "Waar komt henRYANand vandaan?",
+      options: ["Nederland", "België", "Duitsland"],
+      answer: "Nederland"
+    },
+    {
+      question: "Hoe heet Ryan echt?",
+      options: ["Ryan de Vries", "Ryan Janssen", "Ryan Smits"],
+      answer: "Ryan de Vries"
+    },
+    {
+      question: "Wat is een favoriete activiteit van Ryan?",
+      options: ["Eten proeven", "Dansen", "Fietsen"],
+      answer: "Eten proeven"
+    }
+  ];
+
+  let selectedQuestions = [];
+
+  function shuffleArray(array) {
+    for(let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+  }
+
+  function generateQuiz() {
+    // Kies 3 willekeurige vragen
+    shuffleArray(allQuestions);
+    selectedQuestions = allQuestions.slice(0, 3);
+
+    const container = document.getElementById('questionsContainer');
+    container.innerHTML = '';
+
+    selectedQuestions.forEach((q, i) => {
+      let qHtml = `<p>${i+1}. ${q.question}</p>`;
+      q.options.forEach(option => {
+        const inputId = `q${i}_${option.replace(/\s+/g,'')}`;
+        qHtml += `
+          <label>
+            <input type="radio" name="q${i}" value="${option}" required id="${inputId}">
+            ${option}
+          </label><br>
+        `;
+      });
+      container.innerHTML += qHtml;
+    });
+  }
+
+  // Scores opslaan
+  let scores = JSON.parse(sessionStorage.getItem('henryanScores')) || [];
+
+  function checkQuiz() {
+    const playerName = document.getElementById('playerName').value.trim();
+    if (!playerName) {
+      alert('Vul alsjeblieft je naam in!');
+      return;
+    }
+
+    let score = 0;
+    for(let i = 0; i < selectedQuestions.length; i++) {
+      const selected = document.querySelector(`input[name="q${i}"]:checked`);
+      if (selected && selected.value === selectedQuestions[i].answer) {
+        score++;
+      }
+    }
+
+    document.getElementById('quizResult').innerHTML = `Hey <strong>${playerName}</strong>, je hebt <strong>${score}</strong> van de ${selectedQuestions.length} goed! 🎉`;
+
+    scores.push({name: playerName, score: score});
+    sessionStorage.setItem('henryanScores', JSON.stringify(scores));
+    renderScoreboard();
+  }
+
+  function renderScoreboard() {
+    const board = document.getElementById('scoreboard');
+    board.innerHTML = '';
+    scores.sort((a,b) => b.score - a.score);
+
+    for (const s of scores) {
+      const li = document.createElement('li');
+      li.textContent = `${s.name}: ${s.score} punten`;
+      board.appendChild(li);
+    }
+  }
+
+  // Start quiz bij laden pagina
+  generateQuiz();
+  renderScoreboard();
+</script>
